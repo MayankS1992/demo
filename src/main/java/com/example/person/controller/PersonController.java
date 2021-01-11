@@ -4,7 +4,6 @@ import com.example.person.domain.Person;
 import com.example.person.service.PersonService;
 import com.example.person.validator.PersonValidator;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,10 +28,9 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 @Slf4j
 public class PersonController {
 
-    private PersonService personService;
-    private PersonValidator personValidator;
+    private final PersonService personService;
+    private final PersonValidator personValidator;
 
-    @Autowired
     public PersonController(PersonService personService, PersonValidator personValidator) {
         this.personService = personService;
         this.personValidator = personValidator;
@@ -79,14 +77,15 @@ public class PersonController {
 
     @PutMapping(value = "/updatePerson/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Object> updatePerson(@RequestBody @Valid Person person, @PathVariable long id) {
+    public ResponseEntity<String> updatePerson(@RequestBody @Valid Person person, @PathVariable long id) {
         Optional<Person> personOptional = personService.findById(id);
         if (!personOptional.isPresent())
             return ResponseEntity.status(HttpStatus.OK)
                     .body("Person Not present in records" + person.getFirstname());
         person.setId(id);
         personService.updatePerson(person);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.OK)
+                .body("Record updated ");
     }
 
 

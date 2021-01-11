@@ -4,7 +4,6 @@ import com.example.person.domain.Person;
 import com.example.person.exception.PersonNotFoundException;
 import com.example.person.repository.PersonRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,9 +12,8 @@ import java.util.Optional;
 @Service @Slf4j
 public class PersonServiceImpl implements PersonService{
 
-    private PersonRepository personRepository;
+    private final PersonRepository personRepository;
 
-    @Autowired
     public PersonServiceImpl(PersonRepository personRepository) {
         this.personRepository = personRepository;
     }
@@ -24,7 +22,7 @@ public class PersonServiceImpl implements PersonService{
     public List<Person> getPersonList() {
         log.info("Getting the list of person object");
         List<Person> personList = personRepository.findAll();
-        if(personList.isEmpty())
+        if(personList.size()==0)
             throw new PersonNotFoundException("No Data Found or Empty List");
         else
             return personList;
