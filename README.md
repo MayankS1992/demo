@@ -16,7 +16,7 @@ Based on an input from the command line provide the following functionality;
 		
 	
 	B. Go into the project root folder and run the below command in command Line:
-		java -jar ./target/demo-0.0.1-SNAPSHOT.jar ./src/main/java/com/example/person/DemoApplication
+		java -jar ./demo-0.0.1-SNAPSHOT.jar ./src/main/java/com/example/person/DemoApplication
 	
 	
 	C. Rest Endpoints
